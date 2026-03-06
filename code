@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abdo HM – Writer · Traveler · Dreamer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&family=Noto+Naskh+Arabic:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0d0c0b;
+      --ash: #1a1917;
+      --smoke: #2a2825;
+      --dust: #3d3a35;
+      --fog: #6b6560;
+      --mist: #9c948a;
+      --paper: #c8bfb0;
+      --cream: #e8dfd0;
+      --gold: #c8a96e;
+      --gold-light: #e2c98a;
+      --white: #f5f0e8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--cream);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.6;
+    }
+
+    /* ── NAVIGATION ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 60px;
+      background: linear-gradient(to bottom, rgba(13,12,11,0.95), transparent);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--mist);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(13,12,11,0.3) 0%, rgba(13,12,11,0.1) 30%, rgba(13,12,11,0.7) 70%, rgba(13,12,11,1) 100%),
+        linear-gradient(to right, rgba(13,12,11,0.8) 0%, transparent 60%);
+      z-index: 1;
+    }
+
+    .hero-image { display: none; }
+
+    @keyframes slowZoom {
+      to { transform: scale(1); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 60px 80px;
+      max-width: 700px;
+      animation: heroFadeUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-delay: 0.3s;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-tag {
+      font-size: 9px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(56px, 8vw, 100px);
+      font-weight: 300;
+      line-height: 0.9;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .hero-sub {
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--fog);
+      margin-top: 24px;
+      margin-bottom: 40px;
+    }
+
+    .hero-scroll {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--fog);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .hero-scroll:hover { color: var(--gold); }
+
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      padding: 120px 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 32px;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      max-width: 700px;
+      gap: 48px;
+    }
+
+    .about-text p {
+      color: var(--mist);
+      font-size: 15px;
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+
+    .about-text p:first-child {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 300;
+      color: var(--paper);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-portrait {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      filter: grayscale(30%) contrast(1.1);
+    }
+
+    .portrait-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--smoke);
+      border: 1px solid var(--dust);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      color: var(--fog);
+    }
+
+    .portrait-placeholder span {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .about-frame {
+      position: absolute;
+      top: 20px; left: 20px; right: -20px; bottom: -20px;
+      border: 1px solid var(--dust);
+      z-index: -1;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--dust);
+      border: 1px solid var(--dust);
+      margin-top: 48px;
+    }
+
+    .stat {
+      background: var(--ash);
+      padding: 28px 24px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--fog);
+      margin-top: 8px;
+    }
+
+    /* ── BOOK SECTION ── */
+    .book-section {
+      background: var(--ash);
+      padding: 120px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .book-section::before {
+      content: '"';
+      position: absolute;
+      top: -40px;
+      right: 60px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 400px;
+      color: var(--smoke);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .book-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 60px;
+    }
+
+    .book-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      max-width: 700px;
+      gap: 40px;
+    }
+
+    .book-cover-wrap {
+      position: relative;
+    }
+
+    .book-cover {
+      width: 100%;
+      max-width: 400px;
+      box-shadow:
+        -20px 20px 60px rgba(0,0,0,0.8),
+        -2px 2px 0 rgba(255,255,255,0.03);
+      transform: perspective(1000px) rotateY(5deg);
+      transition: transform 0.6s ease;
+    }
+
+    .book-cover:hover {
+      transform: perspective(1000px) rotateY(0deg);
+    }
+
+    .book-glow {
+      position: absolute;
+      bottom: -30px;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: radial-gradient(ellipse, rgba(200,169,110,0.15), transparent 70%);
+      filter: blur(10px);
+    }
+
+    .book-info {
+      position: relative;
+      z-index: 1;
+    }
+
+    .book-arabic-title {
+      font-family: 'Noto Naskh Arabic', serif;
+      font-size: 36px;
+      color: var(--gold-light);
+      margin-bottom: 8px;
+      direction: rtl;
+    }
+
+    .book-english-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-style: italic;
+      color: var(--fog);
+      margin-bottom: 40px;
+    }
+
+    .book-desc p {
+      color: var(--mist);
+      font-size: 14px;
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+
+    .book-quote {
+      border-left: 2px solid var(--gold);
+      padding: 20px 28px;
+      margin: 36px 0;
+      background: rgba(200,169,110,0.04);
+    }
+
+    .book-quote p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-style: italic;
+      color: var(--paper);
+      line-height: 1.6;
+    }
+
+    .book-quote cite {
+      display: block;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--fog);
+      margin-top: 12px;
+      font-style: normal;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 36px;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--ink);
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-light);
+    }
+
+    .btn-outline {
+      border: 1px solid var(--dust);
+      color: var(--mist);
+      margin-left: 16px;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ── QUOTES ── */
+    .quotes-section {
+      position: relative;
+    }
+
+    .quotes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--dust);
+      border: 1px solid var(--dust);
+      margin-top: 60px;
+    }
+
+    .quote-card {
+      background: var(--ink);
+      padding: 48px 36px;
+      transition: background 0.3s;
+    }
+
+    .quote-card:hover {
+      background: var(--ash);
+    }
+
+    .quote-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      color: var(--dust);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+
+    .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-style: italic;
+      color: var(--paper);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .quote-source {
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ── TRAVELS ── */
+    .travels-section {
+      background: linear-gradient(to bottom, var(--ink), var(--ash), var(--ink));
+      padding: 120px 0;
+    }
+
+    .travels-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 60px;
+    }
+
+    .places-list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--dust);
+      margin-top: 60px;
+    }
+
+    .place-item {
+      background: var(--ink);
+      padding: 40px 32px;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+      cursor: default;
+    }
+
+    .place-item:hover {
+      background: var(--ash);
+      border-bottom-color: var(--gold);
+    }
+
+    .place-country {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--fog);
+      margin-bottom: 8px;
+    }
+
+    .place-city {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: 12px;
+    }
+
+    .place-note {
+      font-size: 12px;
+      color: var(--fog);
+      line-height: 1.6;
+    }
+
+    /* ── CONTACT ── */
+    .contact-section {
+      text-align: center;
+      padding: 140px 60px;
+      position: relative;
+    }
+
+    .contact-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--dust), transparent);
+    }
+
+    .contact-big {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 7vw, 88px);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+
+    .contact-big em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .contact-sub {
+      color: var(--fog);
+      font-size: 13px;
+      margin-bottom: 48px;
+      letter-spacing: 0.05em;
+    }
+
+    .social-row {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 60px;
+    }
+
+    .social-link {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--fog);
+      text-decoration: none;
+      padding-bottom: 4px;
+      border-bottom: 1px solid transparent;
+      transition: all 0.3s;
+    }
+
+    .social-link:hover {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--smoke);
+      padding: 32px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      color: var(--gold);
+      font-weight: 300;
+      letter-spacing: 0.1em;
+    }
+
+    .footer-copy {
+      font-size: 10px;
+      color: var(--fog);
+      letter-spacing: 0.15em;
+    }
+
+    /* ── DIVIDER ── */
+    .ornament {
+      text-align: center;
+      color: var(--dust);
+      font-size: 18px;
+      letter-spacing: 0.5em;
+      padding: 20px 0;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 24px 28px; }
+      section { padding: 80px 28px; }
+      .book-inner, .travels-inner { padding: 0 28px; }
+      .about-grid, .book-grid { grid-template-columns: 1fr; gap: 48px; }
+      .about-frame { display: none; }
+      .quotes-grid { grid-template-columns: 1fr; }
+      .places-list { grid-template-columns: 1fr 1fr; }
+      footer { padding: 28px; flex-direction: column; gap: 16px; text-align: center; }
+      .book-cover { max-width: 280px; }
+    }
+
+    /* ── REVEAL ANIMATIONS ── */
+    .reveal {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">abdo hm</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#book">Book</a></li>
+      <li><a href="#words">Words</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Casablanca, Morocco</div>
+      <h1 class="hero-name">Abdo<br><em>HM</em></h1>
+      <p class="hero-sub">Writer &nbsp;·&nbsp; Traveler &nbsp;·&nbsp; Free Soul</p>
+      <a href="#book" class="hero-scroll">
+        <div class="scroll-line"></div>
+        Discover
+      </a>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <div class="section-label">About</div>
+        <h2 class="section-title">A Young Man Who<br><em>Lived Honestly</em></h2>
+        <p>"I am not a writer, an intellectual, or a novelist. I simply love to write."</p>
+        <p>Abdo HM is a young Moroccan writer from Casablanca — a city he wants to escape but that never escapes him. He writes not for fame or recognition, but because writing is his only way to not disappear in silence.</p>
+        <p>His work is raw, unfiltered, and deeply human. Born from lived experience, his words speak to everyone who has ever felt that life is a masquerade party they are attending without a mask.</p>
+        <p>When not writing, he travels — seeking the small seas that no one visits, the northern breakfasts that taste of something real, and the stars you can only count when sleeping on Bedouin mats far from city lights.</p>
+        <div class="stats-row">
+          <div class="stat">
+            <div class="stat-num">1</div>
+            <div class="stat-label">Published Book</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Dark Thoughts</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">MA</div>
+            <div class="stat-label">Morocco</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BOOK -->
+  <div class="book-section" id="book">
+    <div class="book-inner">
+      <div class="book-grid">
+
+        <div class="book-info reveal">
+          <div class="section-label">Latest Book</div>
+          <div class="book-arabic-title">حياة لا تستحق العيش</div>
+          <div class="book-english-title">A Life Not Worth Living</div>
+          <div class="book-desc">
+            <p>A very simple book, rich with dark events. A farewell letter and a gift to the people he loves. An honest account of a young man living through Casablanca's harsh streets, broken relationships, solitude, and the relentless question of whether it is all worth it.</p>
+            <p>Written in both Arabic and English, this debut work is not a manifesto of despair — it is an act of survival through honesty.</p>
+          </div>
+          <div class="book-quote">
+            <p>"I did not write this book to convince you that life is not worth living, nor to prove that it is. I wrote it only to say: this is how I lived it."</p>
+            <cite>— Abdo HM, The End</cite>
+          </div>
+          <div style="display:flex; align-items:center; gap:28px; margin-bottom:32px;">
+            <div style="text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:48px; font-weight:300; color:var(--gold); line-height:1;">Free</div>
+              <div style="font-size:9px; letter-spacing:0.3em; text-transform:uppercase; color:var(--fog);">For Everyone</div>
+            </div>
+            <div style="width:1px; height:48px; background:var(--dust);"></div>
+            <div style="font-size:11px; color:var(--mist); line-height:1.7;">نصوص وتأملات<br><span style="color:var(--fog); font-size:10px;">Texts & Reflections</span></div>
+          </div>
+          <div>
+            <a href="#read-book" class="btn btn-gold">Read Free — Online</a>
+            <a href="#words" class="btn btn-outline">Read Excerpts</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORDS / QUOTES -->
+  <section id="words">
+    <div class="section-label reveal">Excerpts</div>
+    <h2 class="section-title reveal">Words From<br><em>The Dark World</em></h2>
+    <div class="quotes-grid">
+      <div class="quote-card reveal">
+        <div class="quote-num">01</div>
+        <p class="quote-text">"Family is everything. Without them, you are worth zero. Family is your only refuge when no one else remains."</p>
+        <div class="quote-source">The Family</div>
+      </div>
+      <div class="quote-card reveal">
+        <div class="quote-num">02</div>
+        <p class="quote-text">"Writing was my only way to not disappear in silence."</p>
+        <div class="quote-source">The End</div>
+      </div>
+      <div class="quote-card reveal">
+        <div class="quote-num">03</div>
+        <p class="quote-text">"Life is just a masquerade party, and I attended it without a mask."</p>
+        <div class="quote-source">My Birthday</div>
+      </div>
+      <div class="quote-card reveal">
+        <div class="quote-num">04</div>
+        <p class="quote-text">"I may not need anyone, but I will always need my father."</p>
+        <div class="quote-source">Scribbles</div>
+      </div>
+      <div class="quote-card reveal">
+        <div class="quote-num">05</div>
+        <p class="quote-text">"Our streets lack art, love, and flower shops. They lack musicians, intellectuals, and smiling people."</p>
+        <div class="quote-source">Scribbles</div>
+      </div>
+      <div class="quote-card reveal">
+        <div class="quote-num">06</div>
+        <p class="quote-text">"She was the best thing that happened to me in my dark life. She was the light that brought me out of the darkness I was in."</p>
+        <div class="quote-source">Moonlight</div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+  <!-- FREE BOOK READER -->
+  <section id="read-book" style="padding: 80px 60px; max-width: 900px; margin: 0 auto;">
+    <div class="section-label reveal">Read Online — Free</div>
+    <h2 class="section-title reveal" style="font-size: clamp(28px, 4vw, 48px);">Read the Book<br><em>Free for Everyone</em></h2>
+    <p style="color: var(--mist); font-size: 14px; line-height: 1.8; margin-bottom: 32px;">No payment. No download. Read directly in your browser.</p>
+
+    <!-- Reader UI -->
+    <div id="book-reader" style="border:1px solid var(--dust); background:var(--ash); overflow:hidden;">
+
+      <!-- Top bar -->
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 28px; border-bottom:1px solid var(--dust); background:var(--smoke); flex-wrap:wrap; gap:12px;">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:15px; color:var(--gold); letter-spacing:0.1em;">حياة لا تستحق العيش</div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span id="page-label" style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--fog);"></span>
+          <div style="width:80px; height:2px; background:var(--dust); border-radius:2px; overflow:hidden;">
+            <div id="progress-bar" style="height:100%; background:var(--gold); transition:width 0.4s ease; width:0%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page content -->
+      <div id="book-page" style="padding:52px 60px; min-height:520px; font-family:'Cormorant Garamond',serif; color:var(--cream); line-height:1.9; font-size:17px; transition:opacity 0.3s ease;">
+      </div>
+
+      <!-- Bottom nav -->
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:20px 28px; border-top:1px solid var(--dust); background:var(--smoke); gap:16px; flex-wrap:wrap;">
+        <button onclick="prevPage()" id="btn-prev" style="background:none; border:1px solid var(--dust); color:var(--mist); font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:0.25em; text-transform:uppercase; padding:10px 24px; cursor:pointer; transition:all 0.3s;">← Prev</button>
+        <div id="chapter-dots" style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center;"></div>
+        <button onclick="nextPage()" id="btn-next" style="background:none; border:1px solid var(--dust); color:var(--mist); font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:0.25em; text-transform:uppercase; padding:10px 24px; cursor:pointer; transition:all 0.3s;">Next →</button>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    #book-page h3 { font-family:'Cormorant Garamond',serif; font-size:clamp(22px,3vw,32px); font-weight:300; color:var(--white); margin-bottom:6px; line-height:1.2; }
+    #book-page h4 { font-family:'Cormorant Garamond',serif; font-size:13px; font-style:italic; color:var(--gold); letter-spacing:0.2em; margin-bottom:36px; font-weight:300; }
+    #book-page p  { margin-bottom:1.4em; color:var(--mist); }
+    #book-page .ornament { text-align:center; color:var(--dust); letter-spacing:0.5em; margin:28px 0; font-size:13px; }
+    #book-page .scribble { border-left:2px solid var(--gold); padding:18px 28px; background:rgba(200,169,110,0.04); margin:8px 0; }
+    #book-page .scribble p { color:var(--paper); font-style:italic; font-size:18px; }
+    #book-page .cover-page { text-align:center; padding:40px 0; }
+    #book-page .cover-page h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(28px,4vw,48px); font-weight:300; color:var(--white); line-height:1.3; margin-bottom:10px; }
+    #book-page .cover-page .arabic { font-family:'Noto Naskh Arabic',serif; direction:rtl; font-size:clamp(22px,3vw,36px); color:var(--gold-light); margin-bottom:8px; }
+    #book-page .cover-page .author { font-size:12px; letter-spacing:0.3em; color:var(--fog); text-transform:uppercase; margin-top:24px; }
+    #book-page .cover-page .divider { color:var(--dust); letter-spacing:0.5em; margin:20px 0; }
+    #book-page .ar { direction:rtl; text-align:right; font-family:'Noto Naskh Arabic',serif; font-size:18px; color:var(--mist); line-height:2; margin-bottom:1.4em; }
+    #btn-prev:hover, #btn-next:hover { border-color:var(--gold); color:var(--gold); }
+    #btn-prev:disabled, #btn-next:disabled { opacity:0.3; cursor:not-allowed; }
+    #btn-prev:disabled:hover, #btn-next:disabled:hover { border-color:var(--dust); color:var(--mist); }
+    .ch-dot { width:7px; height:7px; border-radius:50%; background:var(--dust); border:none; cursor:pointer; transition:all 0.2s; padding:0; }
+    .ch-dot.active { background:var(--gold); transform:scale(1.4); }
+    .ch-dot:hover { background:var(--gold-light); }
+    @media(max-width:600px){ #book-page{ padding:32px 24px; font-size:15px; } }
+  </style>
+
+  <script>
+  const pages = [
+    {
+      label: "Cover",
+      html: `<div class="cover-page">
+        <div class="divider">❖ ─────────────── ❖</div>
+        <div class="arabic">حياة لا تستحق العيش</div>
+        <h2>A Life Not Worth Living</h2>
+        <div class="divider">❖ ─────────────── ❖</div>
+        <div class="arabic" style="font-size:20px; margin-top:16px;">عبد الحق الحومي</div>
+        <div class="author">Abd al-Haq al-Houmi</div>
+        <p style="margin-top:48px; font-size:13px; color:var(--fog); letter-spacing:0.15em;">© 2025 Abdelhak El Haoumy · All rights reserved</p>
+      </div>`
+    },
+    {
+      label: "Dedication",
+      html: `<h3>إهداء &nbsp;·&nbsp; Dedication</h3><h4>❖ ───────────────────── ❖</h4>
+        <p class="ar">إلى كل من يرى الحياة سوداوية ولا تستحق العيش</p>
+        <p><em>To everyone who sees life as bleak and not worth living.</em></p>`
+    },
+    {
+      label: "Preface",
+      html: `<h3>مقدمة &nbsp;·&nbsp; Preface</h3><h4>❖ ───────────────────── ❖</h4>
+        <p class="ar">صديقي القارئ، أناديك بصديقي لأن الكتاب سوف يخرج لأصدقائي وعائليتي فقط. أنا لست بكاتب أو مثقف أو روائي، أنا فقط أحب الكتابة.</p>
+        <p class="ar">لا أهتم بماذا سوف تفكر عني وأنت تقرأ هذا الكتاب، لأنه سوف يكون هدية مني للأشخاص الذين أحبهم، أو بلغة أخرى رسالة وداع يتذكرونني بها.</p>
+        <p class="ar">كتاب بسيط جدا وغني بالأحداث السوداوية. مرحباً بك في عالمي الأسود.</p>
+        <div class="ornament">· · ·</div>
+        <p>My reader friend — I call you "friend" because this book will only go out to my friends and family. I am not a writer, an intellectual, or a novelist. I simply love to write.</p>
+        <p>I don't care what you will think of me as you read this book, because it will be a gift from me to the people I love — or in other words, a farewell letter for them to remember me by.</p>
+        <p>A very simple book, rich with dark events. Welcome to my dark world.</p>
+        <p>I am just a young man who lived a life he believes is not worth living, and you are just a reader I wanted to read about my life.</p>`
+    },
+    {
+      label: "The Family",
+      html: `<h3>العائلة &nbsp;·&nbsp; The Family</h3><h4>❖ ───────────────────── ❖</h4>
+        <p class="ar">العائلة هي كل شيء. أنت بدونهم تساوي صفر.</p>
+        <p class="ar">العائلة هي ملجأك الوحيد عندما لا يبقى لك شخص آخر.</p>
+        <p class="ar">عندما نكبر قليلاً في مرحلة الشباب نصبح نكره آباءنا ونقول لا يفهمون شيئاً. عندما نكبر قليلاً نفهم أنهم كل شيء في الحياة ونحن بدونهم لا شيء.</p>
+        <div class="ornament">· · ·</div>
+        <p>Family is everything. Without them, you are worth zero.</p>
+        <p>Family is your only refuge when no one else remains.</p>
+        <p>When we grow a little, in our youth, we begin to hate our parents and say they understand nothing. When we grow a little more, we understand that they are everything in life and without them we are nothing.</p>
+        <p>When they die, something inside us dies too. And we too, in the end, come to know the truth of solitude: that we are nothing but bodies without souls, trying to survive.</p>
+        <div class="scribble"><p>My mother always thinks that I am unaffected, unlike my other siblings. But the truth is quite the opposite. I only wanted to be reserved. Perhaps if you had understood my days, mother, you would have realized that I am the weakest of them all — but I never want to expose the wound of my grief to anyone ever again.</p></div>`
+    },
+    {
+      label: "My Father",
+      html: `<h3>أبي &nbsp;·&nbsp; My Father</h3><h4>❖ ───────────────────── ❖</h4>
+        <p class="ar">أبي، أنا أخاف من شيء واحد فقط: هو أن أموت قبلك. أعلم جيداً أنك لن تستطيع العيش بدوني.</p>
+        <p class="ar">كم تعطي، كم تحب، كم لا تبالي بأهم الأشياء لنفسك. لا أعرف العبارات التي أصفك فيها. أنت حالة استثنائية.</p>
+        <p class="ar">أنت فقط من يبقيني على قيد الحياة. أنت فقط من يحبني، وأنا متأكد من هذا.</p>
+        <div class="ornament">· · ·</div>
+        <p>Father, there is only one thing I fear: dying before you. I know very well that you would not be able to live without me.</p>
+        <p>How much you give, how much you love, how little you care about the most important things for yourself. You are an exceptional case.</p>
+        <p>You alone are the one who keeps me alive. You alone love me — I am certain of this. You alone want what is best for me.</p>
+        <p>Father, I have never done anything in my life for you, yet you deserve everything. I only hope that I don't die before you, because I know the hell you would live in.</p>
+        <div class="scribble"><p>I may not need anyone, but I will always need my father.</p></div>`
+    },
+    {
+      label: "My Birthday",
+      html: `<h3>يوم ميلادي &nbsp;·&nbsp; My Birthday</h3><h4>❖ ───────────────────── ❖</h4>
+        <p class="ar">الحياة مجرد حفلة تنكرية وأنا حضرتها بدون قناع. ولم أندم على ما عشته في هذه الحفلة لأن وجهي يستحق.</p>
+        <p class="ar">تعلمت أنه هناك ضوء بعد ظلام طويل امتد لسنوات. لا تبحث عنه، دعه يأتي تلقائياً.</p>
+        <div class="ornament">· · ·</div>
+        <p>Life is just a masquerade party, and I attended it without a mask. I have no regrets about what I lived through at this party, because my face deserves to be seen.</p>
+        <p>I have learned that there is light after a long darkness that stretched for years. Don't search for it; let it come on its own.</p>
+        <p>Twenty years in a world unworthy of it, in a neighborhood that kills, banishes, and never changes. Every time I tried, I only depleted my energy.</p>
+        <p>I know I will not end up in the pit. I will keep trying even if it costs me my life.</p>
+        <div class="scribble"><p>If you knew the speed at which people — and your own family — forget you, you would not have done so much for them.</p></div>`
+    },
+    {
+      label: "The Café",
+      html: `<h3>المقهى &nbsp;·&nbsp; The Café</h3><h4>❖ ───────────────────── ❖</h4>
+        <p class="ar">وحدي جالس في المقهى كباقي الأيام، أستمتع باليشء الوحيد المتاح لي، وأتأمل في الأشخاص الذين يعيشون بهذه الجدية والسرعة.</p>
+        <p class="ar">الحياة بأكملها ليست عادلة. فلماذا أخوض حرباً مع الحياة؟</p>
+        <div class="ornament">· · ·</div>
+        <p>Alone, sitting in the café like every other day, enjoying the only thing available to me, contemplating people who live with such seriousness and speed as they race toward a fleeting moment.</p>
+        <p>All of life is unfair. So why would I wage war against it?</p>
+        <p>Yes, I am negative and hopeless — and everything you imagine about me is true. But I am honest with myself, and that is all that matters.</p>
+        <div class="scribble"><p>All I want is the smell of coffee. From all the days, I want nothing but the smell of coffee — so I can hold myself together, stand on my feet, transform from something crawling into a living being.</p></div>`
+    },
+    {
+      label: "An Ordinary Girl",
+      html: `<h3>فتاة عادية &nbsp;·&nbsp; An Ordinary Girl</h3><h4>❖ ───────────────────── ❖</h4>
+        <p class="ar">أخاف عليك من فتاة عادية...</p>
+        <p class="ar">فالأمر يعني أنك ستُرافق كائناً لا يأبى الهدوء الذي تعشق. لن تناقشك السياسة والتاريخ والفلسفة والوجود.</p>
+        <p class="ar">لست أهوى الفقر عزيزي، لكنني في عشق البساطة قد ولهت.</p>
+        <div class="ornament">· · ·</div>
+        <p>I fear for you from an ordinary girl…</p>
+        <p>She won't discuss politics, history, philosophy, or existence with you. She'll barely understand your absurd questions and the wild chaos inside your curious mind.</p>
+        <p>She won't even share your exceptional lifestyle or your free travels. She prefers a five-star hotel, forgetting all about the real stars we used to count together while lying on handwoven Bedouin mats.</p>
+        <p>I don't worship poverty, my dear, but I have fallen madly in love with simplicity.</p>
+        <p><em>I fear for you, Matilda.</em></p>
+        <div class="scribble"><p>Listening to a woman when she is crying and nervous is like reading the terms and conditions of a website: you understand nothing, but you press 'Agree'!</p></div>`
+    },
+    {
+      label: "Solitude",
+      html: `<h3>العزلة &nbsp;·&nbsp; Solitude</h3><h4>❖ ───────────────────── ❖</h4>
+        <p class="ar">الفرق بين العزلة والوحدة: كتب عالم الرياضيات الفرنسي بلز باسكال: "كل معاناة الرجال تأتي من كونهم لا يستطيعون الجلوس بهدوء في الغرفة لوحدهم."</p>
+        <div class="ornament">· · ·</div>
+        <p>Blaise Pascal wrote: <em>"All of humanity's problems stem from man's inability to sit quietly in a room alone."</em></p>
+        <p>In the midst of our busy lives, we have very little time for solitude. This is a shame, because the ability to sit alone with your thoughts is a great skill.</p>
+        <p>Yet there is a difference between solitude and loneliness, and that difference can kill you.</p>
+        <p>Hannah Arendt claimed that the ability to sit and think for yourself was a fundamental part of solitude — and the tool that leads to freedom.</p>
+        <p>We need to learn not only how to reconnect with each other, but also how to be alone.</p>
+        <div class="scribble"><p>One lives a handicapped life among these 'virtuous' people, watching the numbers of his age slip away like the ticking of a clock on a dull afternoon. Where everything is built between religion and bread, no beautiful way of living ever blooms.</p></div>`
+    },
+    {
+      label: "The Moroccan Dream",
+      html: `<h3>الحلم المغربي &nbsp;·&nbsp; The Moroccan Dream</h3><h4>❖ ───────────────────── ❖</h4>
+        <p class="ar">منذ نعومة أظافري وأنا أسمع بالحلم المغربي، ذلك الحلم الذي نفكر فيه جميعاً.</p>
+        <p class="ar">تبين لي أننا نعيش لنحقق حلم آبائنا. فلم أكن يوماً أريد تلك الشقراء ولا تلك السيارة الفارهة، بل كنت أريد طائرة نفاثة أدور بها حول عالم يسوده السلام.</p>
+        <div class="ornament">· · ·</div>
+        <p>Since my earliest childhood, I have been hearing about the Moroccan Dream — that dream we all think about, for it repeats itself at every moment.</p>
+        <p>I came to understand that we live to fulfill our fathers' dreams. I never wanted the blonde girl or the luxury car. I wanted a jet, to circle a world ruled by peace.</p>
+        <p>Will my son work to fulfill my dream? Or will he be smart enough to stop that wretched wheel?</p>
+        <div class="scribble"><p>Morocco is a bridge — cross it, don't settle on it.</p></div>`
+    },
+    {
+      label: "Trip",
+      html: `<h3>رحلة &nbsp;·&nbsp; Trip</h3><h4>❖ ───────────────────── ❖</h4>
+        <p class="ar">عندما تريد معرفة أصدقائك، سافر معهم. لأن السفر هو الحاجة الوحيدة التي ليست فيها تصنع وارتداء القناع.</p>
+        <p class="ar">وادي القنار: أحسن مكان زرته لحد الآن في الرحلة. مكان لا يوصف، يجب عيشه كي تحس بما شعرت به.</p>
+        <div class="ornament">· · ·</div>
+        <p>If you want to know your friends, travel with them. Because travel is the one thing in which there is no pretense and no mask-wearing.</p>
+        <p>Oued Laou: the best place I visited so far on the trip. An indescribable place — you must live it to feel what I felt.</p>
+        <p>The Northern Breakfast: essential in the north. It consists of cheese, butter, fromage, eggs, olives, olive oil — and mint tea that you simply cannot drink anywhere but the north.</p>
+        <p>Is it because of what I experienced, or is it nostalgia pulling me back to my beloved, wretched city that I want to escape — but that never escapes me? It is Casablanca.</p>
+        <div class="scribble"><p>Those who love nature will find beauty everywhere.</p></div>`
+    },
+    {
+      label: "Happiness",
+      html: `<h3>السعادة &nbsp;·&nbsp; Happiness</h3><h4>❖ ───────────────────── ❖</h4>
+        <p class="ar">السعادة بالنسبة لي غير موجودة، لأن هذا المفهوم بحد ذاته يرتبط بالمدة والوقت.</p>
+        <div class="ornament">· · ·</div>
+        <p>For me, happiness doesn't exist — because the very concept is tied to duration and time. So you will never find a person who is happy for an entire day.</p>
+        <p>As Schopenhauer says: <em>"Throughout his life, man lives between two feelings with no third: the feeling of desire and the feeling of boredom."</em></p>
+        <p>Desire is what one can reach and achieve, and boredom is what one cannot reach or hasn't yet reached. According to him, man lives his suffering caught between these two things.</p>`
+    },
+    {
+      label: "The Days",
+      html: `<h3>علّمتني الأيام &nbsp;·&nbsp; The Days Have Taught Me</h3><h4>❖ ───────────────────── ❖</h4>
+        <p class="ar">علمتني الأيام دروساً لم يذكر اسمها في المقررات والكتب المدرسية.</p>
+        <p class="ar">علمتني أن الإنسان لم يعد سوى مجرد وسيلة.</p>
+        <p class="ar">علمتني أن الثقة في بعض الأشخاص ندامة.</p>
+        <p class="ar">علمتني أن الصامتين هم أكثر الناس علماً.</p>
+        <div class="ornament">· · ·</div>
+        <p>The days have taught me lessons whose names are never mentioned in curricula or school textbooks.</p>
+        <p>They taught me that a person has become nothing more than a means to an end.</p>
+        <p>They taught me that trusting certain people is a regret.</p>
+        <p>They taught me that the silent ones are the most knowledgeable.</p>
+        <p>Here, stories began. Here, stories broke. Here, hearts laughed, and souls wept. Here, we loved and parted.</p>
+        <div class="scribble"><p>Our streets are gloomy and complicated, covered in the dust of artificiality. Our streets lack art, love, and flower shops. They lack musicians, intellectuals, and smiling people. They lack so much…</p></div>`
+    },
+    {
+      label: "Moonlight",
+      html: `<h3>ضوء القمر &nbsp;·&nbsp; Moonlight</h3><h4>❖ ───────────────────── ❖</h4>
+        <p class="ar">الشخص الذي أحببته أكثر في حياتي. الشخص الذي شعرت أنه أحبني أكثر في هذا الجزء القصير من الحياة الذي عشته.</p>
+        <p class="ar">لا يهمني كيف تريني الآن. أحببتِك، وما زلت أحبِك. أريدِك أن تعرفي أنِك الشخص الذي أحببته أكثر.</p>
+        <div class="ornament">· · ·</div>
+        <p>The person I loved most in my life. The person I felt loved me most in this short part of life that I have lived.</p>
+        <p>She is the person I wanted the best for more than anyone else. And because I wanted the best for her, I decided to let her go.</p>
+        <p>I don't care how you see me now. I loved you, and I still love you. I want you to know that you are the person I loved most.</p>
+        <p>Regardless of everything, she is the best thing that happened to me in my dark life. She was the light that brought me out of the darkness I was in.</p>
+        <p><em>I will continue to love you even if we are not together. I love you so much. Thank you for everything we lived together.</em></p>`
+    },
+    {
+      label: "The End",
+      html: `<h3>النهاية &nbsp;·&nbsp; The End</h3><h4>❖ ───────────────────── ❖</h4>
+        <p class="ar">في النهاية، لا أملك حكمة أتركها لك، ولا خلاصة تريح القلب، ولا جملة تنقذ هذا العالم من قسوته.</p>
+        <p class="ar">لم أكتب هذا الكتاب لأقنعك أن الحياة لا تستحق العيش، ولا لأثبت أنها تستحقه. بل كتبته فقط لأقول: هكذا عشتها أنا.</p>
+        <div class="ornament">· · ·</div>
+        <p>In the end, I have no wisdom to leave you with, no conclusion to soothe the heart, no sentence to save this world from its harshness.</p>
+        <p>I did not write this book to convince you that life is not worth living, nor to prove that it is. I wrote it only to say: this is how I lived it.</p>
+        <p>You may find yourself in a line, or curse me in another, or feel nothing at all. All of that is acceptable. Because this book was not written to be loved, but to be understood.</p>
+        <p>Perhaps I will continue, and perhaps I will stop. Perhaps I will find meaning, and perhaps I will settle for searching for it.</p>
+        <p style="color:var(--paper);"><em>But what I know with certainty: that writing was my only way to not disappear in silence.</em></p>
+        <p>And if life has one unforgivable sin, it is that it forces us to continue... even when we are not convinced of it.</p>
+        <div class="ornament">❖ ─────────────── ❖</div>
+        <p style="text-align:center; font-size:12px; letter-spacing:0.2em; color:var(--fog); text-transform:uppercase;">— Abdo HM · 2025 —</p>`
+    }
+  ];
+
+  let current = 0;
+
+  function buildDots() {
+    const c = document.getElementById('chapter-dots');
+    c.innerHTML = '';
+    pages.forEach((p, i) => {
+      const d = document.createElement('button');
+      d.className = 'ch-dot' + (i === 0 ? ' active' : '');
+      d.title = p.label;
+      d.onclick = () => goTo(i);
+      c.appendChild(d);
+    });
+  }
+
+  function goTo(idx, animate) {
+    current = idx;
+    const page = document.getElementById('book-page');
+    page.style.opacity = '0';
+    setTimeout(() => {
+      page.innerHTML = pages[idx].html;
+      page.style.opacity = '1';
+      document.getElementById('page-label').textContent = (idx + 1) + ' / ' + pages.length + '  ·  ' + pages[idx].label;
+      document.getElementById('progress-bar').style.width = ((idx + 1) / pages.length * 100) + '%';
+      document.getElementById('btn-prev').disabled = idx === 0;
+      document.getElementById('btn-next').disabled = idx === pages.length - 1;
+      document.querySelectorAll('.ch-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+      document.getElementById('book-reader').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 250);
+  }
+
+  function nextPage() { if (current < pages.length - 1) goTo(current + 1); }
+  function prevPage() { if (current > 0) goTo(current - 1); }
+
+  buildDots();
+  goTo(0);
+  </script>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">abdo hm</div>
+    <div class="footer-copy">© 2025 Abd al-Haq al-Houmi. All rights reserved.</div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => io.observe(el));
+
+
+  </script>
+</body>
+</html>
